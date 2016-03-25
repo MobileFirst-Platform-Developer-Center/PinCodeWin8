@@ -28,7 +28,7 @@
         <TextBlock HorizontalAlignment="Center" Margin="0,5,0,0" TextWrapping="Wrap" Text="PINCODE" VerticalAlignment="Top" Height="85" Width="auto" Foreground="White" TextAlignment="Center" FontSize="26" FontFamily="Segoe WP SemiLight"/>
         <Button Content="Get Balance" x:Name="GetBalance" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,120,0,0" FontSize="22" Background="#FF3880C2" Foreground="#FFF9FBFF" Height="70" Width="310" FontWeight="Normal" FontFamily="Segoe UI Semilight" Click="GetBalance_Click"/>
 
-        <TextBlock x:Name="Console" HorizontalAlignment="Center" TextAlignment="Justify" Margin="42,220,0,0" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Top" Height="400" Width="380" FontSize="20" FontFamily="Segoe WP" DoubleTapped="ClearConsole" />
+        <TextBlock x:Name="Console" HorizontalAlignment="Center" TextAlignment="Justify" Margin="42,220,48,0" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Top" Height="400" Width="312" FontSize="20" FontFamily="Segoe WP" DoubleTapped="ClearConsole" />
 
 
         <Image HorizontalAlignment="Left" Height="80" Margin="160,540,0,0" VerticalAlignment="Top" Width="80" Source="Assets/icon.png" Opacity="0.7"/>
