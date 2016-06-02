@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Copyright 2016 IBM Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -51,25 +52,26 @@ namespace PincodeWin8
         {
             this.InitializeComponent();
             _this = this;
-            pinCodeChallengeHandler = new PinCodeChallengeHandler("PinCodeAttempts");
+
         }
 
         private async void GetBalance_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                pinCodeChallengeHandler = (PinCodeChallengeHandler)getChallengeHandler();
+                pinCodeChallengeHandler = new PinCodeChallengeHandler("PinCodeAttempts");
+                pinCodeChallengeHandler.SecurityCheck = "PinCodeAttempts";
                 pinCodeChallengeHandler.SetShouldSubmitChallenge(false);
                 pinCodeChallengeHandler.SetSubmitFailure(false);
 
                 IWorklightClient _newClient = WorklightClient.CreateInstance();
-                
+
                 _newClient.RegisterChallengeHandler(pinCodeChallengeHandler);
 
                 StringBuilder uriBuilder = new StringBuilder().Append("/adapters").Append("/ResourceAdapter").Append("/balance");
 
                 Debug.WriteLine(new Uri(uriBuilder.ToString(), UriKind.Relative));
-                
+
                 WorklightResourceRequest rr = _newClient.ResourceRequest(new Uri(uriBuilder.ToString(), UriKind.Relative), "GET", "accessRestricted");
 
                 WorklightResponse resp = await rr.Send();
@@ -77,14 +79,14 @@ namespace PincodeWin8
                 System.Diagnostics.Debug.WriteLine(resp.ResponseText);
 
                 AddTextToConsole(resp.ResponseText);
-                
+
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.StackTrace);
             }
         }
-        
+
         public void AddTextToConsole(String consoleText)
         {
             CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
@@ -116,16 +118,18 @@ namespace PincodeWin8
             hideChallenge();
         }
 
-        public async void showChallenge(WorklightResponse challenge)
+        public async void showChallenge(Object challenge)
         {
             String errorMsg = "";
-           
-            if (challenge.ResponseJSON["errorMsg"] != null )                
+
+            JObject challengeJSON = (JObject)challenge;
+
+            if (challengeJSON != null && challengeJSON.GetValue("errorMsg") != null )
             {
-                if (challenge.ResponseJSON["errorMsg"].Type == JTokenType.Null)
-                    errorMsg = "This data requires a PIN Code.\n";
+                if (challengeJSON.GetValue("errorMsg").Type == JTokenType.Null)
+                    errorMsg = "Wrong Credentials.\n";
             }
-            
+
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
                  async () =>
                  {
@@ -133,13 +137,13 @@ namespace PincodeWin8
                      _this.LoginGrid.Visibility = Visibility.Visible;
                      if(errorMsg != "")
                      {
-                         _this.HintText.Text = errorMsg + "Remaining Attempts: " + challenge.ResponseJSON["remainingAttempts"];
+                         _this.HintText.Text = errorMsg + "Remaining Attempts: " + challengeJSON.GetValue("remainingAttempts");
                      }
                      else
                      {
-                         _this.HintText.Text = challenge.ResponseJSON["errorMsg"] +"\n" + "Remaining Attempts: " + challenge.ResponseJSON["remainingAttempts"];
+                         _this.HintText.Text = challengeJSON.GetValue("errorMsg") +"\n" + "Remaining Attempts: " + challengeJSON.GetValue("remainingAttempts");
                      }
-                     
+
                      _this.GetBalance.IsEnabled = false;
                  });
         }
@@ -152,9 +156,8 @@ namespace PincodeWin8
                     MainPage._this.LoginGrid.Visibility = Visibility.Collapsed;
                     MainPage._this.GetBalance.IsEnabled = true;
                 });
-            //pinCodeChallengeHandler.SetShouldSubmitChallenge(false);
         }
-        
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             hideChallenge();
@@ -163,7 +166,7 @@ namespace PincodeWin8
             PinCodeChallengeHandler.waitForPincode.Set();
         }
 
-        public ChallengeHandler getChallengeHandler()
+        public SecurityCheckChallengeHandler getChallengeHandler()
         {
             return pinCodeChallengeHandler;
         }
@@ -173,6 +176,6 @@ namespace PincodeWin8
             MainPage._this.ConsolePanel.Visibility = Visibility.Collapsed;
             MainPage._this.ConsoleTab.Foreground = new SolidColorBrush(Colors.Gray);
         }
-        
+
     }
 }

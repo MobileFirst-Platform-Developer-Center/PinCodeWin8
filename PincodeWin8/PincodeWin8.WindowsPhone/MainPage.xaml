@@ -1,17 +1,17 @@
-﻿<!--
-    Copyright 2016 IBM Corp.
+<!--
+	Copyright 2016 IBM Corp.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
 -->
 <Page
     x:Class="PincodeWin8.MainPage"
@@ -28,23 +28,23 @@
         <TextBlock HorizontalAlignment="Center" Margin="0,5,0,0" TextWrapping="Wrap" Text="PINCODE" VerticalAlignment="Top" Height="85" Width="auto" Foreground="White" TextAlignment="Center" FontSize="26" FontFamily="Segoe WP SemiLight"/>
         <Button Content="Get Balance" x:Name="GetBalance" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,120,0,0" FontSize="22" Background="#FF3880C2" Foreground="#FFF9FBFF" Height="70" Width="310" FontWeight="Normal" FontFamily="Segoe UI Semilight" Click="GetBalance_Click"/>
 
-        <TextBlock x:Name="Console" HorizontalAlignment="Center" TextAlignment="Justify" Margin="42,220,48,0" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Top" Height="400" Width="312" FontSize="20" FontFamily="Segoe WP" DoubleTapped="ClearConsole" />
+        <TextBlock x:Name="Console" HorizontalAlignment="Center" TextAlignment="Left" Margin="42,220,-11,0" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Top" Height="400" Width="369" FontSize="20" FontFamily="Segoe WP" DoubleTapped="ClearConsole" />
 
 
         <Image HorizontalAlignment="Left" Height="80" Margin="160,540,0,0" VerticalAlignment="Top" Width="80" Source="Assets/icon.png" Opacity="0.7"/>
-        
-        <Grid Visibility="Collapsed" x:Name="LoginGrid" HorizontalAlignment="Center" Height="381" Margin="0,85,0,0" VerticalAlignment="Top" Width="396" Background="#FF3880C2">
+
+        <Grid Visibility="Collapsed" x:Name="LoginGrid" HorizontalAlignment="Center" Height="309" Margin="2,118,2,0" VerticalAlignment="Top" Width="396" Background="#FF3880C2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="107*"/>
                 <ColumnDefinition Width="289*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox HorizontalAlignment="Center" x:Name="pintext" FontSize="20"   Margin="58,209,67.833,0" Text="" VerticalAlignment="Top" Height="50" Width="270" PlaceholderText="PIN CODE" TextAlignment="Center" Grid.ColumnSpan="2"/>
-            <Button Name="OKButton" Content="OK" HorizontalAlignment="Left" Margin="60,299,0,0" VerticalAlignment="Top" Width="104" Height="70" FontSize="20" Click="OKButton_Click" Grid.ColumnSpan="2"/>
-            <Button Name="CancelButton" Click="CancelButton_Click" Content="Cancel" HorizontalAlignment="Left" Margin="70.99,300,0,0" VerticalAlignment="Top" Width="150" Height="70" FontSize="20" Grid.Column="1"/>
-            <Rectangle Fill="#FF225583" HorizontalAlignment="Left" Height="120" VerticalAlignment="Top" Width="396" Grid.ColumnSpan="2"/>
-            <TextBlock HorizontalAlignment="Left" Margin="0,10,0,0" TextWrapping="Wrap" Text="Protected" VerticalAlignment="Top" Height="41" Width="390" FontSize="20" TextAlignment="Center" FontFamily="Segoe UI Semilight" Grid.ColumnSpan="2"/>
-            <TextBlock Name="HintText" HorizontalAlignment="Left" Margin="0,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="86" Width="390" FontSize="20" TextAlignment="Center" FontFamily="Segoe UI Semilight" Grid.ColumnSpan="2"/>
+            <TextBox HorizontalAlignment="Center" x:Name="pintext" FontSize="20"   Margin="58,99,67.833,0" Text="" VerticalAlignment="Top" Height="50" Width="270" PlaceholderText="PIN CODE" TextAlignment="Center" Grid.ColumnSpan="2"/>
+            <Button Name="OKButton" Content="OK" HorizontalAlignment="Left" Margin="60,182,0,0" VerticalAlignment="Top" Width="104" Height="70" FontSize="20" Click="OKButton_Click" Grid.ColumnSpan="2"/>
+            <Button Name="CancelButton" Click="CancelButton_Click" Content="Cancel" HorizontalAlignment="Left" Margin="71.333,183,0,0" VerticalAlignment="Top" Width="150" Height="70" FontSize="20" Grid.Column="1"/>
+            <Rectangle Fill="#FF225583" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="396" Grid.ColumnSpan="2"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,1,0,0" TextWrapping="Wrap" Text="Protected" VerticalAlignment="Top" Height="41" Width="390" FontSize="20" TextAlignment="Center" FontFamily="Segoe UI Semilight" Grid.ColumnSpan="2"/>
+            <TextBlock Name="HintText" HorizontalAlignment="Left" Margin="2,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="60" Width="390" FontSize="20" TextAlignment="Center" FontFamily="Segoe UI Semilight" Grid.ColumnSpan="2"/>
 
         </Grid>
 

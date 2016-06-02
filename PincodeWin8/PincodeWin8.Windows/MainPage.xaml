@@ -1,17 +1,17 @@
-﻿<!--
-    Copyright 2016 IBM Corp.
+<!--
+	Copyright 2016 IBM Corp.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
 -->
 <Page
     x:Class="PincodeWin8.MainPage"
@@ -34,7 +34,7 @@
 
         <Image HorizontalAlignment="Left" Height="100" Margin="148,593,0,0" VerticalAlignment="Top" Width="100" Source="Assets/icon.png" Opacity="0.7"/>
         <TextBlock x:Name="ConsoleTab" HorizontalAlignment="Left" Margin="453,35,0,0" TextWrapping="Wrap" Text="Console" VerticalAlignment="Top" Height="45" Width="129" FontSize="27" FontFamily="Segoe UI Semilight" TextAlignment="Center" Tapped="ShowConsole" Foreground="DodgerBlue"/>
-        
+
         <Grid Visibility="Collapsed" x:Name="LoginGrid" HorizontalAlignment="Left" Height="381" Margin="520,185,0,0" VerticalAlignment="Top" Width="738" Background="#FF3880C2">
             <TextBox HorizontalAlignment="Center" x:Name="pintext" FontSize="20"   Margin="236,175,232,0" Text="" VerticalAlignment="Top" Height="50" Width="270" PlaceholderText="PIN CODE" TextAlignment="Center"/>
             <Button Name="OKButton" Content="OK" HorizontalAlignment="Left" Margin="64,289,0,0" VerticalAlignment="Top" Width="276" Height="50" FontSize="20" Click="OKButton_Click"/>
