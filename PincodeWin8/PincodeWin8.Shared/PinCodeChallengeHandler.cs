@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Copyright 2016 IBM Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,17 +25,22 @@ using System.Net;
 
 namespace PincodeWin8
 {
-    public class PinCodeChallengeHandler : Worklight.ChallengeHandler
+    public class PinCodeChallengeHandler : Worklight.SecurityCheckChallengeHandler
     {
         public JObject challengeAnswer { get; set; }
-        private bool authSuccess = false;
+
+        public override string SecurityCheck
+        {
+            get; set;
+        }
+
         private bool shouldsubmitchallenge = false;
         private bool shouldsubmitfailure = false;
         private string Realm;
 
         public static ManualResetEvent waitForPincode = new ManualResetEvent(false);
 
-        public PinCodeChallengeHandler(String securityCheck) 
+        public PinCodeChallengeHandler(String securityCheck)
         {
             Realm = securityCheck;
         }
@@ -44,12 +50,7 @@ namespace PincodeWin8
             return this.challengeAnswer;
         }
 
-        public override string GetRealm()
-        {
-            return Realm;
-        }
-
-        public override void HandleChallenge(WorklightResponse challenge)
+        public override void HandleChallenge(object challenge)
         {
 
             waitForPincode.Reset();
@@ -58,43 +59,9 @@ namespace PincodeWin8
             waitForPincode.WaitOne();
         }
 
-        public override bool ShouldSubmitFailure()
+        public override bool ShouldCancel()
         {
             return shouldsubmitfailure;
-        }
-
-        public override void OnFailure(WorklightResponse response)
-        {
-            Debug.WriteLine(response.ResponseJSON);
-        }
-
-        public override void OnSuccess(WorklightResponse challenge)
-        {
-            Debug.WriteLine(challenge.ResponseJSON);
-        }
-
-        public override bool ShouldSubmitSuccess()
-        {
-            return authSuccess;
-        }
-
-        public override WorklightResponse GetSubmitFailureResponse()
-        {
-            JObject respJSON = new JObject();
-            respJSON.Add("Respose", "Cancelled Request");
-
-            WorklightResponse response = new WorklightResponse(false, "User cancelled the request", respJSON, "User cancelled the request", (int)HttpStatusCode.InternalServerError);
-            return response;
-        }
-
-        public override bool IsCustomResponse(WorklightResponse response)
-        {
-            if (response == null || response.ResponseJSON == null || response.ResponseJSON["PinCodeAttempts"] == null)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         public override bool ShouldSubmitChallengeAnswer()
@@ -112,6 +79,21 @@ namespace PincodeWin8
         {
             this.shouldsubmitfailure = shouldsubmitfailure;
         }
-        
+
+        public override void HandleFailure(JObject error)
+        {
+            Debug.WriteLine("Failure");
+        }
+
+        public override void HandleSuccess(JObject identity)
+        {
+            Debug.WriteLine("Success");
+        }
+
+        public override void SubmitChallengeAnswer(object answer)
+        {
+            challengeAnswer = (JObject)answer;
+        }
+
     }
 }

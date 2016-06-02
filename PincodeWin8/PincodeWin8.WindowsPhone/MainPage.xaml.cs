@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Copyright 2016 IBM Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,6 +51,7 @@ namespace PincodeWin8
             this.InitializeComponent();
             _this = this;
             pinCodeChallengeHandler = new PinCodeChallengeHandler("PinCodeAttempts");
+            pinCodeChallengeHandler.SecurityCheck = "PinCodeAttempts";
         }
 
         private async void GetBalance_Click(object sender, RoutedEventArgs e)
@@ -109,14 +110,16 @@ namespace PincodeWin8
             hideChallenge();
         }
 
-        public async void showChallenge(WorklightResponse challenge)
+        public async void showChallenge(Object challenge)
         {
             String errorMsg = "";
 
-            if (challenge.ResponseJSON["errorMsg"] != null)
+            JObject challengeJSON = (JObject)challenge;
+
+            if (challengeJSON != null && challengeJSON.GetValue("errorMsg") != null)
             {
-                if (challenge.ResponseJSON["errorMsg"].Type == JTokenType.Null)
-                    errorMsg = "This data requires a PIN Code.\n";
+                if (challengeJSON.GetValue("errorMsg").Type == JTokenType.Null)
+                    errorMsg = "Wrong Credentials.\n";
             }
 
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
@@ -126,11 +129,11 @@ namespace PincodeWin8
                      _this.LoginGrid.Visibility = Visibility.Visible;
                      if (errorMsg != "")
                      {
-                         _this.HintText.Text = errorMsg + "Remaining Attempts: " + challenge.ResponseJSON["remainingAttempts"];
+                         _this.HintText.Text = errorMsg + "Remaining Attempts: " + challengeJSON.GetValue("remainingAttempts");
                      }
                      else
                      {
-                         _this.HintText.Text = challenge.ResponseJSON["errorMsg"] + "\n" + "Remaining Attempts: " + challenge.ResponseJSON["remainingAttempts"];
+                         _this.HintText.Text = challengeJSON.GetValue("errorMsg") + "\n" + "Remaining Attempts: " + challengeJSON.GetValue("remainingAttempts");
                      }
 
                      _this.GetBalance.IsEnabled = false;
@@ -155,10 +158,10 @@ namespace PincodeWin8
             PinCodeChallengeHandler.waitForPincode.Set();
         }
 
-        public ChallengeHandler getChallengeHandler()
+        public SecurityCheckChallengeHandler getChallengeHandler()
         {
             return pinCodeChallengeHandler;
         }
-        
+
     }
 }
