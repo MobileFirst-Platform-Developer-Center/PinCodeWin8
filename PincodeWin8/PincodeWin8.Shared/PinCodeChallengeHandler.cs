@@ -90,7 +90,7 @@ namespace PincodeWin8
             Debug.WriteLine("Success");
         }
 
-        public override void SubmitChallengeAnswer(object answer)
+        public void SubmitChallengeAnswer(object answer)
         {
             challengeAnswer = (JObject)answer;
         }
